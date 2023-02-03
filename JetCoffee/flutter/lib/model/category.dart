@@ -57,35 +57,35 @@ class Category {
 
 final dummyCategory = [
   Category(
-    imageCategory: "assets/icon_category_all",
+    imageCategory: "assets/icon_category_all.webp",
     textCategory: categoryAll,
   ),
   Category(
-    imageCategory: "assets/icon_category_americano ",
+    imageCategory: "assets/icon_category_americano.webp",
     textCategory: categoryAmericano,
   ),
   Category(
-    imageCategory: "assets/icon_category_cappuccino ",
+    imageCategory: "assets/icon_category_cappuccino.webp",
     textCategory: categoryCappuccino,
   ),
   Category(
-    imageCategory: "assets/icon_category_espresso ",
+    imageCategory: "assets/icon_category_espresso.webp",
     textCategory: categoryEspresso,
   ),
   Category(
-    imageCategory: "assets/icon_category_frappe ",
+    imageCategory: "assets/icon_category_frappe.webp",
     textCategory: categoryFrappe,
   ),
   Category(
-    imageCategory: "assets/icon_category_latte ",
+    imageCategory: "assets/icon_category_latte.webp",
     textCategory: categoryLatte,
   ),
   Category(
-    imageCategory: "assets/icon_category_macchiato ",
+    imageCategory: "assets/icon_category_macchiato.webp",
     textCategory: categoryMacchiato,
   ),
   Category(
-    imageCategory: "assets/icon_category_mocha ",
+    imageCategory: "assets/icon_category_mocha.webp",
     textCategory: categoryMocha,
   ),
 ];
