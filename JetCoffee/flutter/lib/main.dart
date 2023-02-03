@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:jet_coffee/model/category.dart';
+import 'package:jet_coffee/utils/string.dart';
+import 'package:jet_coffee/widget/category_item.dart';
 import 'package:jet_coffee/widget/search_bar.dart';
+import 'package:jet_coffee/widget/section_text.dart';
 
 void main() {
   runApp(const JetCoffeeApp());
@@ -32,8 +36,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: const [
-          Banner()
+          Banner(),
+          SectionText(title: sectionCategory),
+          CategoryRow(),
         ],
       ),
     );
@@ -58,6 +67,33 @@ class Banner extends StatelessWidget {
         ),
         const SearchBar(),
       ],
+    );
+  }
+}
+
+class CategoryRow extends StatelessWidget {
+  const CategoryRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 200,
+      child: ListView.separated(
+        padding: const EdgeInsets.all(16),
+        itemCount: dummyCategory.length,
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        primary: false,
+        itemBuilder: (context, index) {
+          final category = dummyCategory[index];
+          return CategoryItem(
+            category: category,
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(width: 8);
+        },
+      ),
     );
   }
 }
