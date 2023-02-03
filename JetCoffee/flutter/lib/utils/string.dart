@@ -1,0 +1,16 @@
+const appName = "JetCoffee";
+const placeholderSearch = "Cari kopi pilihanmu!";
+const categoryAll = "All";
+const categoryAmericano = "Americano";
+const categoryCappuccino = "Cappuccino";
+const categoryEspresso = "Espresso";
+const categoryFrappe = "Frappe";
+const categoryLatte = "Latte";
+const categoryMacchiato = "Macchiato";
+const categoryMocha = "Mocha";
+const sectionCategory = "Mau ngopi apa hari ini?";
+const sectionFavoriteMenu = "Menu Favorit";
+const sectionBestSellerMenu = "Menu Terlaris";
+const menuHome = "Home";
+const menuFavorite = "Favorite";
+const menuProfile = "Profile";
