@@ -16,7 +16,7 @@ class SectionText extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.w800,
             ),
       ),

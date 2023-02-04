@@ -61,22 +61,22 @@ class Menu {
 
 final dummyMenu = [
   Menu(
-    image: "assets/menu1",
+    image: "assets/menu1.webp",
     title: "Tiramisu Coffee Milk",
     price: "Rp 28.000",
   ),
   Menu(
-    image: "assets/menu2",
+    image: "assets/menu2.webp",
     title: "Pumpkin Spice Latte",
     price: "Rp 18.000",
   ),
   Menu(
-    image: "assets/menu3",
+    image: "assets/menu3.webp",
     title: "Light Cappuccino",
     price: "Rp 20.000",
   ),
   Menu(
-    image: "assets/menu4",
+    image: "assets/menu4.webp",
     title: "Choco Creamy Latte",
     price: "Rp 16.000",
   ),

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:jet_coffee/model/category.dart';
 import 'package:jet_coffee/utils/string.dart';
 import 'package:jet_coffee/widget/category_item.dart';
+import 'package:jet_coffee/widget/menu_item.dart';
 import 'package:jet_coffee/widget/search_bar.dart';
 import 'package:jet_coffee/widget/section_text.dart';
+
+import 'model/menu.dart';
 
 void main() {
   runApp(const JetCoffeeApp());
@@ -35,15 +38,21 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: const [
-          Banner(),
-          SectionText(title: sectionCategory),
-          CategoryRow(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children:  [
+            const Banner(),
+            const SectionText(title: sectionCategory),
+            const CategoryRow(),
+            const SectionText(title: sectionFavoriteMenu),
+            MenuRow(listMenu: dummyMenu),
+            const SectionText(title: sectionBestSellerMenu),
+            MenuRow(listMenu: dummyBestSellerMenu),
+          ],
+        ),
       ),
     );
   }
@@ -77,7 +86,7 @@ class CategoryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 160,
       child: ListView.separated(
         padding: const EdgeInsets.all(16),
         itemCount: dummyCategory.length,
@@ -93,6 +102,33 @@ class CategoryRow extends StatelessWidget {
         separatorBuilder: (context, index) {
           return const SizedBox(width: 8);
         },
+      ),
+    );
+  }
+}
+
+class MenuRow extends StatelessWidget {
+  final List<Menu> listMenu;
+  const MenuRow({
+    super.key,
+    required this.listMenu,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 200,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        itemBuilder: (context, index) {
+          final menu = listMenu[index];
+          return MenuItem(menu: menu);
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(width: 8);
+        },
+        itemCount: listMenu.length,
       ),
     );
   }
