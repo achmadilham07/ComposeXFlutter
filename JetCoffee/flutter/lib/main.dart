@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jet_coffee/model/category.dart';
 import 'package:jet_coffee/utils/string.dart';
 import 'package:jet_coffee/widget/category_item.dart';
+import 'package:jet_coffee/widget/home_section.dart';
 import 'package:jet_coffee/widget/menu_item.dart';
 import 'package:jet_coffee/widget/search_bar.dart';
 import 'package:jet_coffee/widget/section_text.dart';
@@ -43,14 +44,20 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          children:  [
+          children: [
             const Banner(),
-            const SectionText(title: sectionCategory),
-            const CategoryRow(),
-            const SectionText(title: sectionFavoriteMenu),
-            MenuRow(listMenu: dummyMenu),
-            const SectionText(title: sectionBestSellerMenu),
-            MenuRow(listMenu: dummyBestSellerMenu),
+            const HomeSection(
+              title: sectionCategory,
+              content: CategoryRow(),
+            ),
+            HomeSection(
+              title: sectionFavoriteMenu,
+              content: MenuRow(listMenu: dummyMenu),
+            ),
+            HomeSection(
+              title: sectionBestSellerMenu,
+              content: MenuRow(listMenu: dummyBestSellerMenu),
+            ),
           ],
         ),
       ),
