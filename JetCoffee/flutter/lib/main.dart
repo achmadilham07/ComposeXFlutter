@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:jet_coffee/model/category.dart';
-import 'package:jet_coffee/utils/string.dart';
-import 'package:jet_coffee/widget/category_item.dart';
-import 'package:jet_coffee/widget/home_section.dart';
-import 'package:jet_coffee/widget/menu_item.dart';
-import 'package:jet_coffee/widget/search_bar.dart';
-import 'package:jet_coffee/widget/section_text.dart';
 
+import 'model/bottom_bar_item.dart';
+import 'model/category.dart';
 import 'model/menu.dart';
+import 'utils/color.dart';
+import 'utils/string.dart';
+import 'utils/theme.dart';
+import 'widget/category_item.dart';
+import 'widget/home_section.dart';
+import 'widget/menu_item.dart';
+import 'widget/search_bar.dart';
 
 void main() {
   runApp(const JetCoffeeApp());
@@ -20,9 +22,8 @@ class JetCoffeeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: lightColorPalette,
+      darkTheme: darkColorPalette,
       home: const MyHomePage(),
     );
   }
@@ -61,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      bottomNavigationBar: const BottomBar(),
     );
   }
 }
@@ -137,6 +139,39 @@ class MenuRow extends StatelessWidget {
         },
         itemCount: listMenu.length,
       ),
+    );
+  }
+}
+
+class BottomBar extends StatelessWidget {
+  const BottomBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final navigationItems = [
+      BottomBarItem(
+        title: "Home",
+        icon: const Icon(Icons.home),
+      ),
+      BottomBarItem(
+        title: "Favorite",
+        icon: const Icon(Icons.favorite),
+      ),
+      BottomBarItem(
+        title: "Profile",
+        icon: const Icon(Icons.account_circle),
+      ),
+    ];
+    return BottomNavigationBar(
+      onTap: (index) {},
+      backgroundColor: Theme.of(context).colorScheme.background,
+      selectedItemColor: Theme.of(context).colorScheme.primary,
+      unselectedItemColor: lightGray,
+      items: navigationItems
+          .map(
+            (e) => BottomNavigationBarItem(icon: e.icon, label: e.title),
+          )
+          .toList(),
     );
   }
 }
