@@ -30,6 +30,7 @@ class MyHomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: const <Widget>[
           StatefulTemperatureInput(),
+          ConverterApp(),
         ],
       ),
     );
@@ -51,9 +52,7 @@ class StatefulTemperatureInput extends StatefulWidget {
 }
 
 class _StatefulTemperatureInputState extends State<StatefulTemperatureInput> {
-  var input = "";
   var output = "";
-  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +66,6 @@ class _StatefulTemperatureInputState extends State<StatefulTemperatureInput> {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           TextFormField(
-            controller: controller,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               hintText: enterCelsius,
@@ -75,11 +73,68 @@ class _StatefulTemperatureInputState extends State<StatefulTemperatureInput> {
             ),
             onChanged: (newInput) {
               setState(() {
-                input = newInput;
                 output = convertToFahrenheit(newInput);
-                
               });
             },
+          ),
+          Text(temperatureFahrenheit(output))
+        ],
+      ),
+    );
+  }
+}
+
+class ConverterApp extends StatefulWidget {
+  const ConverterApp({super.key});
+
+  @override
+  State<ConverterApp> createState() => _ConverterAppState();
+}
+
+class _ConverterAppState extends State<ConverterApp> {
+  var output = "";
+
+  @override
+  Widget build(BuildContext context) {
+    return StatelessTemperatureInput(
+      output: output,
+      onValueChange: (newInput) {
+        setState(() {
+          output = convertToFahrenheit(newInput);
+        });
+      },
+    );
+  }
+}
+
+class StatelessTemperatureInput extends StatelessWidget {
+  final String output;
+  final Function(String newInput) onValueChange;
+
+  const StatelessTemperatureInput({
+    super.key,
+    required this.output,
+    required this.onValueChange,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            statelessConverter,
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          TextFormField(
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              hintText: enterCelsius,
+              border: OutlineInputBorder(),
+            ),
+            onChanged: (value) => onValueChange(value),
           ),
           Text(temperatureFahrenheit(output))
         ],
