@@ -32,6 +32,7 @@ fun CartScreen(
             Injection.provideRepository()
         )
     ),
+    onOrderButtonClicked: (String) -> Unit,
 ) {
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
@@ -44,6 +45,7 @@ fun CartScreen(
                     onProductCountChanged = { rewardId, count ->
                         viewModel.updateOrderReward(rewardId, count)
                     },
+                    onOrderButtonClicked = onOrderButtonClicked
                 )
             }
             is UiState.Error -> {}
@@ -55,8 +57,14 @@ fun CartScreen(
 fun CartContent(
     state: CartState,
     onProductCountChanged: (id: Long, count: Int) -> Unit,
-    modifier: Modifier = Modifier
+    onOrderButtonClicked: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
+    val shareMessage = stringResource(
+        R.string.share_message,
+        state.orderReward.count(),
+        state.totalRequiredPoint
+    )
     Column(
         modifier = modifier.fillMaxSize()
     ) {
@@ -72,7 +80,9 @@ fun CartContent(
         OrderButton(
             text = stringResource(R.string.total_order, state.totalRequiredPoint),
             enabled = state.orderReward.isNotEmpty(),
-            onClick = {},
+            onClick = {
+                onOrderButtonClicked(shareMessage)
+            },
             modifier = Modifier.padding(16.dp)
         )
         LazyColumn(
