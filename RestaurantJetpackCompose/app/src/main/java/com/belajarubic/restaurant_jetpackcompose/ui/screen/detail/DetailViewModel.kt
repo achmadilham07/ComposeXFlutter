@@ -1,8 +1,5 @@
 package com.belajarubic.restaurant_jetpackcompose.ui.screen.detail
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.belajarubic.restaurant_jetpackcompose.data.RestaurantRepository
@@ -20,7 +17,7 @@ class DetailViewModel(
     val uiState: StateFlow<UiState<Restaurant>>
         get() = _uiState
 
-    private val _isFavorite: MutableStateFlow<Boolean> =  MutableStateFlow(false)
+    private val _isFavorite: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isFavorite: StateFlow<Boolean> get() = _isFavorite
 
     fun getRestaurantById(restaurantId: String) {

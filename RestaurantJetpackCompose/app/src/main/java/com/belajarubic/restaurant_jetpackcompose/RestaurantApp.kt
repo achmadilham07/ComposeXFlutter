@@ -8,11 +8,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.belajarubic.restaurant_jetpackcompose.ui.navigation.Screen
-import com.belajarubic.restaurant_jetpackcompose.ui.screen.DetailScreen
-import com.belajarubic.restaurant_jetpackcompose.ui.screen.HomeScreen
-import com.belajarubic.restaurant_jetpackcompose.ui.screen.SplashScreen
 import com.belajarubic.restaurant_jetpackcompose.ui.screen.account.AccountScreen
+import com.belajarubic.restaurant_jetpackcompose.ui.screen.detail.DetailScreen
 import com.belajarubic.restaurant_jetpackcompose.ui.screen.favorite.FavoriteScreen
+import com.belajarubic.restaurant_jetpackcompose.ui.screen.home.HomeScreen
+import com.belajarubic.restaurant_jetpackcompose.ui.screen.splash.SplashScreen
 
 
 @Composable

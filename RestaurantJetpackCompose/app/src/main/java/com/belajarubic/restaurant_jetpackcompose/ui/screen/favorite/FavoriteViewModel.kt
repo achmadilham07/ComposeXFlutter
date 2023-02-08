@@ -1,7 +1,5 @@
 package com.belajarubic.restaurant_jetpackcompose.ui.screen.favorite
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.belajarubic.restaurant_jetpackcompose.data.RestaurantRepository

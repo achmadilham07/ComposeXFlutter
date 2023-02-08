@@ -8,7 +8,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,9 +21,7 @@ import com.belajarubic.restaurant_jetpackcompose.di.Injection
 import com.belajarubic.restaurant_jetpackcompose.ui.ViewModelFactory
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.CircularIndicator
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.RestaurantItem
-import com.belajarubic.restaurant_jetpackcompose.ui.navigation.Screen
 import com.dicoding.jetreward.ui.common.UiState
-import kotlinx.coroutines.delay
 
 @Composable
 fun FavoriteScreen(

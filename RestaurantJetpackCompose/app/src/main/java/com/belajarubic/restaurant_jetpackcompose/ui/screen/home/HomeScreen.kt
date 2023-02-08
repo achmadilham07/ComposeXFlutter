@@ -1,4 +1,4 @@
-package com.belajarubic.restaurant_jetpackcompose.ui.screen
+package com.belajarubic.restaurant_jetpackcompose.ui.screen.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,7 +26,6 @@ import com.belajarubic.restaurant_jetpackcompose.ui.ViewModelFactory
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.CircularIndicator
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.RestaurantItem
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.SearchBar
-import com.belajarubic.restaurant_jetpackcompose.ui.screen.home.HomeViewModel
 import com.dicoding.jetreward.ui.common.UiState
 
 @Composable

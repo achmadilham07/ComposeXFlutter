@@ -1,4 +1,4 @@
-package com.belajarubic.restaurant_jetpackcompose.ui.screen
+package com.belajarubic.restaurant_jetpackcompose.ui.screen.splash
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
