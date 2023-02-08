@@ -12,6 +12,7 @@ import com.belajarubic.restaurant_jetpackcompose.ui.screen.DetailScreen
 import com.belajarubic.restaurant_jetpackcompose.ui.screen.HomeScreen
 import com.belajarubic.restaurant_jetpackcompose.ui.screen.SplashScreen
 import com.belajarubic.restaurant_jetpackcompose.ui.screen.account.AccountScreen
+import com.belajarubic.restaurant_jetpackcompose.ui.screen.favorite.FavoriteScreen
 
 
 @Composable
@@ -32,6 +33,9 @@ fun RestaurantApp(navController: NavHostController = rememberNavController()) {
                 },
                 navigateToAccount = {
                     navController.navigate(Screen.Account.route)
+                },
+                navigateToFavorite = {
+                    navController.navigate(Screen.Favorite.route)
                 }
             )
         }
@@ -40,6 +44,16 @@ fun RestaurantApp(navController: NavHostController = rememberNavController()) {
                 navigateBack = {
                     navController.navigateUp()
                 }
+            )
+        }
+        composable(Screen.Favorite.route) {
+            FavoriteScreen(
+                navigateBack = {
+                    navController.navigateUp()
+                },
+                navigateToDetail = { restaurantId ->
+                    navController.navigate(Screen.DetailRestaurant.createRoute(restaurantId))
+                },
             )
         }
         composable(

@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -37,6 +38,7 @@ fun HomeScreen(
     ),
     navigateToDetail: (String) -> Unit,
     navigateToAccount: () -> Unit,
+    navigateToFavorite: () -> Unit,
 ) {
     val query by viewModel.query
 
@@ -48,6 +50,11 @@ fun HomeScreen(
                         onClick = { navigateToAccount() }
                     ) {
                         Icon(Icons.Filled.Person, "about_page")
+                    }
+                    IconButton(
+                        onClick = { navigateToFavorite() }
+                    ) {
+                        Icon(Icons.Filled.Favorite, "favorite_page")
                     }
                 },
                 elevation = 0.dp,
@@ -118,6 +125,7 @@ fun HomeScreen(
 fun HomeScreenPreview() {
     HomeScreen(
         navigateToDetail = {},
-        navigateToAccount = {}
+        navigateToAccount = {},
+        navigateToFavorite = {}
     )
 }

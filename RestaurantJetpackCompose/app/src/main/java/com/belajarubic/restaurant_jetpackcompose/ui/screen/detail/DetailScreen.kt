@@ -1,13 +1,16 @@
 package com.belajarubic.restaurant_jetpackcompose.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.belajarubic.restaurant_jetpackcompose.R
 import com.belajarubic.restaurant_jetpackcompose.di.Injection
+import com.belajarubic.restaurant_jetpackcompose.model.Restaurant
 import com.belajarubic.restaurant_jetpackcompose.ui.ViewModelFactory
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.CircularIndicator
 import com.belajarubic.restaurant_jetpackcompose.ui.screen.detail.DetailViewModel
@@ -30,41 +34,63 @@ import com.dicoding.jetreward.ui.common.UiState
 
 @Composable
 fun DetailScreen(
-    id: String,
-    viewModel: DetailViewModel = viewModel(
+    id: String, viewModel: DetailViewModel = viewModel(
         factory = ViewModelFactory(
             Injection.provideRepository()
         )
-    ),
-    navigateBack: () -> Unit = {}
+    ), navigateBack: () -> Unit = {}
 ) {
+    var restaurant by rememberSaveable { mutableStateOf(Restaurant()) }
+
     Scaffold(topBar = {
-        TopAppBar(
-            title = {
-                Text(
-                    text = "Restaurant Detail",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp,
-                    textAlign = TextAlign.Start,
-                    color = Color.White,
+        TopAppBar(title = {
+            Text(
+                text = "Restaurant Detail",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp),
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+                textAlign = TextAlign.Start,
+                color = Color.White,
+            )
+        }, navigationIcon = {
+            IconButton(
+                onClick = { navigateBack() },
+            ) {
+                Icon(
+                    Icons.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    modifier = Modifier.size(ButtonDefaults.IconSize)
                 )
-            },
-            navigationIcon = {
+            }
+        }, actions = {
+//            val isFavorite by viewModel.isFavorite
+            viewModel.isFavorite.collectAsState(false).value.let { isFavorite ->
+
+                viewModel.checkRestaurantIsFavorite(id)
+                Log.e("ERROR", "isFavorite: $isFavorite")
+
+                val icon =
+                    if (isFavorite) Icons.Filled.Favorite
+                    else Icons.Filled.FavoriteBorder
                 IconButton(
-                    onClick = { navigateBack() },
+                    onClick = {
+                        Log.e("ERROR", "restaurant: $restaurant")
+                        if (isFavorite) viewModel.removeRestaurantFromFavorite(restaurant.id)
+                        else viewModel.addRestaurantToFavorite(restaurant)
+
+                        viewModel.checkRestaurantIsFavorite(id)
+                    },
                 ) {
                     Icon(
-                        Icons.Filled.ArrowBack,
-                        contentDescription = "Back",
+                        icon,
+                        contentDescription = "Favorite",
                         modifier = Modifier.size(ButtonDefaults.IconSize)
                     )
                 }
             }
-
-        )
+        })
     }) { contentPadding ->
         viewModel.uiState.collectAsState().value.let { state ->
             when (state) {
@@ -73,7 +99,7 @@ fun DetailScreen(
                     CircularIndicator()
                 }
                 is UiState.Success -> {
-                    val restaurant = state.data
+                    restaurant = state.data
                     LazyColumn(
                         modifier = Modifier.padding(contentPadding)
                     ) {
@@ -82,8 +108,7 @@ fun DetailScreen(
                                 model = restaurant.getPicture(),
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth()
                             )
                             Column(
                                 modifier = Modifier.padding(16.dp),
@@ -93,12 +118,12 @@ fun DetailScreen(
                                 ) {
                                     Column(modifier = Modifier.weight(1f)) {
                                         Text(
-                                            text = restaurant.name,
+                                            text = restaurant.name ?: "",
                                             style = MaterialTheme.typography.h6,
                                         )
                                         Spacer(modifier = Modifier.height(4.dp))
                                         Text(
-                                            text = restaurant.city,
+                                            text = restaurant.city ?: "",
                                             style = MaterialTheme.typography.body1,
                                         )
                                     }
@@ -116,7 +141,7 @@ fun DetailScreen(
                                     }
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
-                                Text(restaurant.description)
+                                Text(restaurant.description ?: "")
                             }
 
                         }

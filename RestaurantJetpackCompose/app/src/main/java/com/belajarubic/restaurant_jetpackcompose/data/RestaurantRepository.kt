@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.flowOf
 class RestaurantRepository {
 
     private val restaurant = mutableListOf<Restaurant>()
-    private lateinit var account: Account
+    private val localRestaurant = mutableListOf<Restaurant>()
+    private var account: Account
 
     init {
         if (restaurant.isEmpty()) {
@@ -38,6 +39,28 @@ class RestaurantRepository {
         return restaurant.filter {
             it.name.contains(query, ignoreCase = true)
         }
+    }
+
+    fun addRestaurantToDatabase(restaurant: Restaurant): Flow<Boolean> {
+        return flowOf(localRestaurant.add(restaurant))
+    }
+
+    fun removeRestaurantToDatabase(restaurantId: String): Flow<Boolean> {
+        val restaurant = localRestaurant.find {
+            it.id == restaurantId
+        }
+        return flowOf(localRestaurant.remove(restaurant))
+    }
+
+    fun getAllRestaurantListFromDatabase(): Flow<List<Restaurant>> {
+        return flowOf(localRestaurant)
+    }
+
+    fun checkRestaurantToDatabase(restaurantId: String): Flow<Boolean> {
+        val restaurant = localRestaurant.find {
+            it.id == restaurantId
+        }
+        return flowOf(restaurant != null)
     }
 
     companion object {

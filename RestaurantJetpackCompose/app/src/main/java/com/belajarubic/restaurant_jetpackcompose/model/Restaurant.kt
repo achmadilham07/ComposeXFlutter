@@ -12,6 +12,11 @@ data class Restaurant(
     var city: String,
     var rating: Double
 ) : Parcelable {
+
+    constructor() : this(
+        "", "", "", "", "", 0.0
+    )
+
     fun getPicture(): String {
         return "https://restaurant-api.dicoding.dev/images/medium/$pictureId"
     }
