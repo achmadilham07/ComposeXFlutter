@@ -15,12 +15,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.belajarubic.restaurant_jetpackcompose.R
 import com.belajarubic.restaurant_jetpackcompose.di.Injection
 import com.belajarubic.restaurant_jetpackcompose.ui.ViewModelFactory
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.CircularIndicator
@@ -59,7 +61,7 @@ fun HomeScreen(
                 elevation = 0.dp,
                 title = {
                     Text(
-                        text = "Restaurant List",
+                        text = stringResource(id = R.string.restaurant_list_page),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 12.dp),
@@ -97,7 +99,7 @@ fun HomeScreen(
                                 verticalArrangement = Arrangement.Center,
                                 modifier = Modifier.fillMaxHeight(),
                             ) {
-                                Text(text = "Tidak ada restaurant")
+                                Text(text = stringResource(id = R.string.no_restaurant_item))
                             }
                         }
                         LazyColumn(contentPadding = contentPadding) {

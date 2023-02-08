@@ -12,11 +12,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.belajarubic.restaurant_jetpackcompose.R
 import com.belajarubic.restaurant_jetpackcompose.di.Injection
 import com.belajarubic.restaurant_jetpackcompose.ui.ViewModelFactory
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.CircularIndicator
@@ -36,7 +38,7 @@ fun FavoriteScreen(
     Scaffold(topBar = {
         TopAppBar(title = {
             Text(
-                text = "Restaurant Detail",
+                text = stringResource(id = R.string.favorite_restaurant_page),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp),
@@ -51,7 +53,7 @@ fun FavoriteScreen(
             ) {
                 Icon(
                     Icons.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = stringResource(id = R.string.back_button),
                     modifier = Modifier.size(ButtonDefaults.IconSize)
                 )
             }
@@ -73,7 +75,7 @@ fun FavoriteScreen(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 Text(
-                                    text = "Tidak ada restaurant",
+                                    text = stringResource(id = R.string.no_restaurant_item),
                                     textAlign = TextAlign.Center,
                                 )
                             }

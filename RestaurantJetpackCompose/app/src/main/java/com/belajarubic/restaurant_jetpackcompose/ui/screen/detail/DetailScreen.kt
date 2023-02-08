@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.belajarubic.restaurant_jetpackcompose.R
 import com.belajarubic.restaurant_jetpackcompose.di.Injection
 import com.belajarubic.restaurant_jetpackcompose.model.Restaurant
 import com.belajarubic.restaurant_jetpackcompose.ui.ViewModelFactory
@@ -42,7 +44,7 @@ fun DetailScreen(
     Scaffold(topBar = {
         TopAppBar(title = {
             Text(
-                text = "Restaurant Detail",
+                text = stringResource(id = R.string.restaurant_detail_page),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp),
@@ -57,7 +59,7 @@ fun DetailScreen(
             ) {
                 Icon(
                     Icons.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = stringResource(id = R.string.back_button),
                     modifier = Modifier.size(ButtonDefaults.IconSize)
                 )
             }
@@ -82,7 +84,7 @@ fun DetailScreen(
                 ) {
                     Icon(
                         icon,
-                        contentDescription = "Favorite",
+                        contentDescription = stringResource(R.string.favorite),
                         modifier = Modifier.size(ButtonDefaults.IconSize)
                     )
                 }
