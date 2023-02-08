@@ -23,6 +23,7 @@ import coil.compose.AsyncImage
 import com.belajarubic.restaurant_jetpackcompose.R
 import com.belajarubic.restaurant_jetpackcompose.di.Injection
 import com.belajarubic.restaurant_jetpackcompose.ui.ViewModelFactory
+import com.belajarubic.restaurant_jetpackcompose.ui.composable.CircularIndicator
 import com.belajarubic.restaurant_jetpackcompose.ui.screen.detail.DetailViewModel
 import com.dicoding.jetreward.ui.common.UiState
 
@@ -67,7 +68,10 @@ fun DetailScreen(
     }) { contentPadding ->
         viewModel.uiState.collectAsState().value.let { state ->
             when (state) {
-                is UiState.Loading -> viewModel.getRestaurantById(id)
+                is UiState.Loading -> {
+                    viewModel.getRestaurantById(id)
+                    CircularIndicator()
+                }
                 is UiState.Success -> {
                     val restaurant = state.data
                     LazyColumn(

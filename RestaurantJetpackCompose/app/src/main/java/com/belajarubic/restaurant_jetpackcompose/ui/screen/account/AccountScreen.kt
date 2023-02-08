@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.belajarubic.restaurant_jetpackcompose.di.Injection
 import com.belajarubic.restaurant_jetpackcompose.ui.ViewModelFactory
+import com.belajarubic.restaurant_jetpackcompose.ui.composable.CircularIndicator
 import com.dicoding.jetreward.ui.common.UiState
 
 @Composable
@@ -64,7 +65,10 @@ fun AccountScreen(
         Column(modifier = Modifier.padding(contentPadding)) {
             viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { state ->
                 when (state) {
-                    is UiState.Loading -> viewModel.getAccount()
+                    is UiState.Loading -> {
+                        viewModel.getAccount()
+                        CircularIndicator()
+                    }
                     is UiState.Error -> {}
                     is UiState.Success -> {
                         val account = state.data

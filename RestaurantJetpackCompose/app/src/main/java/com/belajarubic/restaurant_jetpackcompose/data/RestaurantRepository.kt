@@ -34,6 +34,12 @@ class RestaurantRepository {
         }
     }
 
+    fun getRestaurantByQuery(query: String): List<Restaurant> {
+        return restaurant.filter {
+            it.name.contains(query, ignoreCase = true)
+        }
+    }
+
     companion object {
         @Volatile
         private var instance: RestaurantRepository? = null
