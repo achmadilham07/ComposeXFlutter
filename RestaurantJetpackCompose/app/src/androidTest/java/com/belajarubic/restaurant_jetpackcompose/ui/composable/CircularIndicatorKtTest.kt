@@ -25,7 +25,7 @@ class CircularIndicatorKtTest {
     }
 
     @Test
-    fun check_circular_indicator(){
+    fun check_circular_indicator() {
         composeUiTestRule.run {
             onNodeWithTag(
                 activity.resources.getString(R.string.loading)

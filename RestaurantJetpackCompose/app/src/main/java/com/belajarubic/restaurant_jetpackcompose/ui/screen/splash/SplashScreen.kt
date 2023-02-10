@@ -10,10 +10,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.belajarubic.restaurant_jetpackcompose.R
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.CircularIndicator
-import com.belajarubic.restaurant_jetpackcompose.ui.navigation.Screen
 import kotlinx.coroutines.delay
 
 

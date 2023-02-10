@@ -4,13 +4,9 @@ import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.onNodeWithTag
-import com.belajarubic.restaurant_jetpackcompose.R
 import com.belajarubic.restaurant_jetpackcompose.model.Restaurant
 import com.belajarubic.restaurant_jetpackcompose.ui.theme.RestaurantJetpackComposeTheme
 import com.belajarubic.restaurant_jetpackcompose.utils.DummyData
-import org.junit.Assert.*
-
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -34,7 +30,7 @@ class RestaurantItemKtTest {
     }
 
     @Test
-    fun check_circular_indicator(){
+    fun check_circular_indicator() {
         composeUiTestRule.run {
             onNodeWithContentDescription(
                 "${restaurant.name} item"

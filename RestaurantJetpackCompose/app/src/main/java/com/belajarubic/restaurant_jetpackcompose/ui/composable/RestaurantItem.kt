@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -22,8 +21,8 @@ import com.belajarubic.restaurant_jetpackcompose.model.Restaurant
 
 @Composable
 fun RestaurantItem(
-    restaurant: Restaurant,
     modifier: Modifier = Modifier,
+    restaurant: Restaurant,
 ) {
     Card(
         shape = MaterialTheme.shapes.medium,
@@ -74,7 +73,7 @@ fun RestaurantItem(
 @Composable
 fun RestaurantItemPreview() {
     RestaurantItem(
-        Restaurant(
+        restaurant = Restaurant(
             id = "123",
             name = "Kunokuni",
             city = "Surabaya", rating = 4.5,

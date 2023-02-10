@@ -1,14 +1,13 @@
 package com.belajarubic.restaurant_jetpackcompose.ui.screen.home
 
 import androidx.activity.ComponentActivity
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.test.*
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.navigation.compose.ComposeNavigator
-import androidx.navigation.testing.TestNavHostController
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import com.belajarubic.restaurant_jetpackcompose.R
 import com.belajarubic.restaurant_jetpackcompose.ui.theme.RestaurantJetpackComposeTheme
-import kotlinx.coroutines.delay
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -56,7 +55,7 @@ class HomeScreenKtTest {
     }
 
     @Test
-    fun check_restaurant_list_page(){
+    fun check_restaurant_list_page() {
         composeUiTestRule.run {
             onNodeWithTag(activity.getString(R.string.restaurant_list_page)).assertIsDisplayed()
         }

@@ -3,7 +3,6 @@ package com.belajarubic.restaurant_jetpackcompose.ui.screen.account
 import androidx.activity.ComponentActivity
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -53,7 +52,7 @@ class AccountScreenKtTest {
     }
 
     @Test
-    fun check_account_page(){
+    fun check_account_page() {
         composeUiTestRule.run {
             onNodeWithTag(activity.getString(R.string.about_me_page)).assertIsDisplayed()
         }
