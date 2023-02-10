@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
@@ -15,7 +14,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.SemanticsPropertyKey
+import androidx.compose.ui.semantics.SemanticsPropertyReceiver
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,16 +28,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
 import com.belajarubic.restaurant_jetpackcompose.R
 import com.belajarubic.restaurant_jetpackcompose.di.Injection
 import com.belajarubic.restaurant_jetpackcompose.model.Restaurant
 import com.belajarubic.restaurant_jetpackcompose.ui.ViewModelFactory
+import com.belajarubic.restaurant_jetpackcompose.ui.composable.BackButton
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.CircularIndicator
 import com.dicoding.jetreward.ui.common.UiState
 
+val DrawableId = SemanticsPropertyKey<AsyncImagePainter>("AsyncImageId")
+var SemanticsPropertyReceiver.asyncPainter by DrawableId
 
 @Composable
 fun DetailScreen(
+    modifier: Modifier = Modifier,
     id: String, viewModel: DetailViewModel = viewModel(
         factory = ViewModelFactory(
             Injection.provideRepository()
@@ -40,61 +50,60 @@ fun DetailScreen(
     ), navigateBack: () -> Unit = {}
 ) {
     var restaurant by rememberSaveable { mutableStateOf(Restaurant()) }
+    val context = LocalContext.current
 
-    Scaffold(topBar = {
-        TopAppBar(title = {
-            Text(
-                text = stringResource(id = R.string.restaurant_detail_page),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp),
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Start,
-                color = Color.White,
-            )
-        }, navigationIcon = {
-            IconButton(
-                onClick = { navigateBack() },
-            ) {
-                Icon(
-                    Icons.Filled.ArrowBack,
-                    contentDescription = stringResource(id = R.string.back_button),
-                    modifier = Modifier.size(ButtonDefaults.IconSize)
+    Scaffold(
+        modifier = modifier.testTag(stringResource(id = R.string.restaurant_detail_page)),
+        topBar = {
+            TopAppBar(title = {
+                Text(
+                    text = stringResource(id = R.string.restaurant_detail_page),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Start,
+                    color = Color.White,
                 )
-            }
-        }, actions = {
-//            val isFavorite by viewModel.isFavorite
-            viewModel.isFavorite.collectAsState(false).value.let { isFavorite ->
+            }, navigationIcon = {
+                BackButton(
+                    navigateBack = navigateBack,
+                )
+            }, actions = {
+                viewModel.isFavorite.collectAsState(false).value.let { isFavorite ->
 
-                viewModel.checkRestaurantIsFavorite(id)
-                Log.e("ERROR", "isFavorite: $isFavorite")
+                    viewModel.checkRestaurantIsFavorite(id)
+                    Log.e("ERROR", "isFavorite: $isFavorite")
 
-                val icon =
-                    if (isFavorite) Icons.Filled.Favorite
-                    else Icons.Filled.FavoriteBorder
-                IconButton(
-                    onClick = {
-                        Log.e("ERROR", "restaurant: $restaurant")
-                        if (isFavorite) viewModel.removeRestaurantFromFavorite(restaurant.id)
-                        else viewModel.addRestaurantToFavorite(restaurant)
+                    val icon =
+                        if (isFavorite) Icons.Filled.Favorite
+                        else Icons.Filled.FavoriteBorder
+                    IconButton(
+                        onClick = {
+                            Log.e("ERROR", "restaurant: $restaurant")
+                            if (isFavorite) viewModel.removeRestaurantFromFavorite(restaurant.id)
+                            else viewModel.addRestaurantToFavorite(restaurant)
 
-                        viewModel.checkRestaurantIsFavorite(id)
-                    },
-                ) {
-                    Icon(
-                        icon,
-                        contentDescription = stringResource(R.string.favorite),
-                        modifier = Modifier.size(ButtonDefaults.IconSize)
-                    )
+                            viewModel.checkRestaurantIsFavorite(id)
+                        },
+                        modifier = Modifier.semantics {
+                            contentDescription = context.resources.getString(R.string.favorite)
+                        }
+                    ) {
+                        Icon(
+                            icon,
+                            contentDescription = stringResource(R.string.favorite),
+                            modifier = Modifier.size(ButtonDefaults.IconSize)
+                        )
+                    }
                 }
-            }
-        })
-    }) { contentPadding ->
+            })
+        }) { contentPadding ->
+        viewModel.getRestaurantById(id)
         viewModel.uiState.collectAsState().value.let { state ->
             when (state) {
                 is UiState.Loading -> {
-                    viewModel.getRestaurantById(id)
                     CircularIndicator()
                 }
                 is UiState.Success -> {

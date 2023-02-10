@@ -13,8 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.SemanticsPropertyKey
+import androidx.compose.ui.semantics.SemanticsPropertyReceiver
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -26,8 +30,12 @@ import com.belajarubic.restaurant_jetpackcompose.ui.ViewModelFactory
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.CircularIndicator
 import com.dicoding.jetreward.ui.common.UiState
 
+val DrawableId = SemanticsPropertyKey<Int>("DrawableResId")
+var SemanticsPropertyReceiver.drawableId by DrawableId
+
 @Composable
 fun AccountScreen(
+    modifier: Modifier = Modifier,
     viewModel: AccountViewModel = viewModel(
         factory = ViewModelFactory(
             Injection.provideRepository()
@@ -36,6 +44,7 @@ fun AccountScreen(
     navigateBack: () -> Unit = {}
 ) {
     Scaffold(
+        modifier = modifier.testTag(stringResource(id = R.string.about_me_page)),
         topBar = {
             TopAppBar(
                 title = {
@@ -64,11 +73,11 @@ fun AccountScreen(
             )
         }
     ) { contentPadding ->
+        viewModel.getAccount()
         Column(modifier = Modifier.padding(contentPadding)) {
             viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { state ->
                 when (state) {
                     is UiState.Loading -> {
-                        viewModel.getAccount()
                         CircularIndicator()
                     }
                     is UiState.Error -> {}
@@ -87,6 +96,7 @@ fun AccountScreen(
                                     .clip(
                                         CircleShape
                                     )
+                                    .semantics { drawableId = account.imageCategory }
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(

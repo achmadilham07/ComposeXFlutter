@@ -15,7 +15,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,34 +30,44 @@ import com.belajarubic.restaurant_jetpackcompose.R
 import com.belajarubic.restaurant_jetpackcompose.di.Injection
 import com.belajarubic.restaurant_jetpackcompose.ui.ViewModelFactory
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.CircularIndicator
+import com.belajarubic.restaurant_jetpackcompose.ui.composable.EmptyRestaurantList
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.RestaurantItem
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.SearchBar
 import com.dicoding.jetreward.ui.common.UiState
 
 @Composable
 fun HomeScreen(
+    modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(
         factory = ViewModelFactory(
             Injection.provideRepository()
         )
     ),
-    navigateToDetail: (String) -> Unit,
-    navigateToAccount: () -> Unit,
-    navigateToFavorite: () -> Unit,
+    navigateToDetail: (String) -> Unit = {},
+    navigateToAccount: () -> Unit = {},
+    navigateToFavorite: () -> Unit = {},
 ) {
     val query by viewModel.query
+    val context = LocalContext.current
 
     Scaffold(
+        modifier = modifier.testTag(stringResource(id = R.string.restaurant_list_page)),
         topBar = {
             TopAppBar(
                 actions = {
                     IconButton(
-                        onClick = { navigateToAccount() }
+                        onClick = { navigateToAccount() },
+                        modifier = Modifier.semantics {
+                            contentDescription = context.resources.getString(R.string.account)
+                        }
                     ) {
                         Icon(Icons.Filled.Person, "about_page")
                     }
                     IconButton(
-                        onClick = { navigateToFavorite() }
+                        onClick = { navigateToFavorite() },
+                        modifier = Modifier.semantics {
+                            contentDescription = context.resources.getString(R.string.favorite)
+                        }
                     ) {
                         Icon(Icons.Filled.Favorite, "favorite_page")
                     }
@@ -78,31 +92,31 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
+            viewModel.getAllRestaurant()
             Row(
                 modifier = Modifier.background(MaterialTheme.colors.primary)
             ) {
                 SearchBar(
                     query = query,
                     onQueryChange = viewModel::searchRestaurant,
+                    modifier = Modifier.testTag(stringResource(id = R.string.search_bar))
                 )
             }
             viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { state ->
                 when (state) {
                     is UiState.Loading -> {
-                        viewModel.getAllRestaurant()
                         CircularIndicator()
                     }
                     is UiState.Success -> {
                         if (state.data.isEmpty()) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center,
-                                modifier = Modifier.fillMaxHeight(),
-                            ) {
-                                Text(text = stringResource(id = R.string.no_restaurant_item))
-                            }
+                            EmptyRestaurantList()
                         }
-                        LazyColumn(contentPadding = contentPadding) {
+                        LazyColumn(
+                            contentPadding = contentPadding,
+                            modifier = Modifier.testTag(
+                                stringResource(id = R.string.restaurant_list)
+                            )
+                        ) {
                             items(state.data) { restaurant ->
                                 RestaurantItem(
                                     restaurant = restaurant,

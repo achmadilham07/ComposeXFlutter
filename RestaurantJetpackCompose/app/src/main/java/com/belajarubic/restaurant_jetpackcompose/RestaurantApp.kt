@@ -23,7 +23,10 @@ fun RestaurantApp(navController: NavHostController = rememberNavController()) {
     ) {
         composable(Screen.Splash.route) {
             SplashScreen(
-                navController = navController,
+                navigateToHome = {
+                    navController.popBackStack()
+                    navController.navigate(Screen.Home.route)
+                }
             )
         }
         composable(Screen.Home.route) {

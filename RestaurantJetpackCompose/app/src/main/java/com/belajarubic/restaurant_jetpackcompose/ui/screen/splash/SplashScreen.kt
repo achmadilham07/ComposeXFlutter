@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -17,20 +19,23 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    navController: NavHostController
+    modifier: Modifier = Modifier,
+    navigateToHome: () -> Unit = {},
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
+            .testTag(stringResource(id = R.string.splash_page))
     ) {
         LaunchedEffect(true) {
             delay(3000)
-            navController.popBackStack()
-            navController.navigate(Screen.Home.route)
+            navigateToHome()
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            val content = LocalContext.current
             Text(text = stringResource(id = R.string.splash_text))
             Spacer(modifier = Modifier.height(8.dp))
             CircularIndicator()
