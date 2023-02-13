@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Restaurant-JetpackCompose</string>
+    <string name="restaurant_detail_page">Restaurant Detail Page</string>
+    <string name="back_button">Back Button</string>
+    <string name="favorite">Favorite</string>
+    <string name="about_me_page">About Me Page</string>
+    <string name="favorite_restaurant_page">Favorite Restaurant Page</string>
+    <string name="restaurant_list_page">Restaurant List Page</string>
+    <string name="no_restaurant_item">Tidak ada restaurant</string>
+    <string name="splash_text">Ini adalah splash screen</string>
+    <string name="splash_loading">Loading</string>
+    <string name="search_bar">Search Bar</string>
+    <string name="account">Account</string>
+    <string name="loading">Loading</string>
+    <string name="restaurant_list">Restaurant List</string>
+    <string name="empty_restaurant_item">Empty Item</string>
+    <string name="splash_page">Splash Screen</string>
+</resources>
