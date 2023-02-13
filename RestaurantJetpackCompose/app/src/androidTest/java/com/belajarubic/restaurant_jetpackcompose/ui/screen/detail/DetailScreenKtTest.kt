@@ -30,7 +30,8 @@ class DetailScreenKtTest {
                 navController = TestNavHostController(LocalContext.current)
                 navController.navigatorProvider.addNavigator(ComposeNavigator())
                 DetailScreen(
-                    id = restaurant.id
+                    id = restaurant.id,
+                    navigateBack = { navController.navigateUp() },
                 )
             }
         }

@@ -21,7 +21,11 @@ class HomeScreenKtTest {
     fun setUp() {
         composeUiTestRule.setContent {
             RestaurantJetpackComposeTheme {
-                HomeScreen()
+                HomeScreen(
+                    navigateToFavorite = {},
+                    navigateToAccount = {},
+                    navigateToDetail = {},
+                )
             }
         }
     }

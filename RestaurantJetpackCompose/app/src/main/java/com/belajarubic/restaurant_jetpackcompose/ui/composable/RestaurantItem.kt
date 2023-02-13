@@ -21,8 +21,8 @@ import com.belajarubic.restaurant_jetpackcompose.model.Restaurant
 
 @Composable
 fun RestaurantItem(
-    modifier: Modifier = Modifier,
     restaurant: Restaurant,
+    modifier: Modifier = Modifier,
 ) {
     Card(
         shape = MaterialTheme.shapes.medium,

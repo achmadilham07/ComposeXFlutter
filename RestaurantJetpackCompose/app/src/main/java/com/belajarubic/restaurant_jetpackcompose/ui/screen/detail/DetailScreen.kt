@@ -17,8 +17,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.SemanticsPropertyKey
-import androidx.compose.ui.semantics.SemanticsPropertyReceiver
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -28,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
 import com.belajarubic.restaurant_jetpackcompose.R
 import com.belajarubic.restaurant_jetpackcompose.di.Injection
 import com.belajarubic.restaurant_jetpackcompose.model.Restaurant
@@ -37,17 +34,16 @@ import com.belajarubic.restaurant_jetpackcompose.ui.composable.BackButton
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.CircularIndicator
 import com.dicoding.jetreward.ui.common.UiState
 
-val DrawableId = SemanticsPropertyKey<AsyncImagePainter>("AsyncImageId")
-var SemanticsPropertyReceiver.asyncPainter by DrawableId
-
 @Composable
 fun DetailScreen(
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    id: String, viewModel: DetailViewModel = viewModel(
+    id: String,
+    viewModel: DetailViewModel = viewModel(
         factory = ViewModelFactory(
             Injection.provideRepository()
         )
-    ), navigateBack: () -> Unit = {}
+    ),
 ) {
     var restaurant by rememberSaveable { mutableStateOf(Restaurant()) }
     val context = LocalContext.current
@@ -74,7 +70,6 @@ fun DetailScreen(
                 viewModel.isFavorite.collectAsState(false).value.let { isFavorite ->
 
                     viewModel.checkRestaurantIsFavorite(id)
-                    Log.e("ERROR", "isFavorite: $isFavorite")
 
                     val icon =
                         if (isFavorite) Icons.Filled.Favorite
@@ -100,10 +95,10 @@ fun DetailScreen(
                 }
             })
         }) { contentPadding ->
-        viewModel.getRestaurantById(id)
         viewModel.uiState.collectAsState().value.let { state ->
             when (state) {
                 is UiState.Loading -> {
+                    viewModel.getRestaurantById(id)
                     CircularIndicator()
                 }
                 is UiState.Success -> {
@@ -163,5 +158,5 @@ fun DetailScreen(
 @Preview(showBackground = true)
 @Composable
 fun DetailScreenPreview() {
-    DetailScreen(id = "")
+    DetailScreen(id = "", navigateBack = {})
 }

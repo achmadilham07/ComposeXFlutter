@@ -30,14 +30,14 @@ import com.dicoding.jetreward.ui.common.UiState
 
 @Composable
 fun FavoriteScreen(
+    navigateBack: () -> Unit,
+    navigateToDetail: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: FavoriteViewModel = viewModel(
         factory = ViewModelFactory(
             Injection.provideRepository()
         )
     ),
-    navigateBack: () -> Unit = {},
-    navigateToDetail: (String) -> Unit,
 ) {
     Scaffold(
         modifier = modifier.testTag(stringResource(id = R.string.favorite_restaurant_page)),
@@ -57,7 +57,7 @@ fun FavoriteScreen(
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = { navigateBack() },
+                        onClick = navigateBack,
                     ) {
                         Icon(
                             Icons.Filled.ArrowBack,
@@ -85,7 +85,7 @@ fun FavoriteScreen(
                             stringResource(id = R.string.restaurant_list)
                         ),
                     ) {
-                        items(state.data) { restaurant ->
+                        items(state.data, key = { it.id }) { restaurant ->
                             RestaurantItem(
                                 restaurant = restaurant,
                                 modifier = Modifier.clickable {

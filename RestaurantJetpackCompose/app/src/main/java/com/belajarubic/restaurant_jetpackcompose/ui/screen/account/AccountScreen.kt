@@ -35,13 +35,13 @@ var SemanticsPropertyReceiver.drawableId by DrawableId
 
 @Composable
 fun AccountScreen(
+    navigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AccountViewModel = viewModel(
         factory = ViewModelFactory(
             Injection.provideRepository()
         )
     ),
-    navigateBack: () -> Unit = {}
 ) {
     Scaffold(
         modifier = modifier.testTag(stringResource(id = R.string.about_me_page)),
@@ -61,7 +61,7 @@ fun AccountScreen(
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = { navigateBack() },
+                        onClick = navigateBack,
                     ) {
                         Icon(
                             Icons.Filled.ArrowBack,
@@ -73,11 +73,11 @@ fun AccountScreen(
             )
         }
     ) { contentPadding ->
-        viewModel.getAccount()
         Column(modifier = Modifier.padding(contentPadding)) {
             viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { state ->
                 when (state) {
                     is UiState.Loading -> {
+                        viewModel.getAccount()
                         CircularIndicator()
                     }
                     is UiState.Error -> {}

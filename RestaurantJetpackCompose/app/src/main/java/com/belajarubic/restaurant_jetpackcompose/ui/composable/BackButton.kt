@@ -13,10 +13,11 @@ import com.belajarubic.restaurant_jetpackcompose.R
 
 @Composable
 fun BackButton(
-    navigateBack: () -> Unit = {},
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     IconButton(
-        onClick = { navigateBack() },
+        onClick = navigateBack,
     ) {
         Icon(
             Icons.Filled.ArrowBack,

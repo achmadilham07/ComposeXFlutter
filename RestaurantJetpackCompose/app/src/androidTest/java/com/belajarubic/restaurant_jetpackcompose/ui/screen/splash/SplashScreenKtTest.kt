@@ -20,7 +20,9 @@ class SplashScreenKtTest {
     fun setUp() {
         composeUiTestRule.setContent {
             RestaurantJetpackComposeTheme {
-                SplashScreen()
+                SplashScreen(
+                    navigateToHome = {}
+                )
             }
         }
     }

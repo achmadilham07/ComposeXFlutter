@@ -36,7 +36,9 @@ class AccountScreenKtTest {
             RestaurantJetpackComposeTheme {
                 navController = TestNavHostController(LocalContext.current)
                 navController.navigatorProvider.addNavigator(ComposeNavigator())
-                AccountScreen()
+                AccountScreen(
+                    navigateBack = { navController.navigateUp() }
+                )
             }
         }
     }

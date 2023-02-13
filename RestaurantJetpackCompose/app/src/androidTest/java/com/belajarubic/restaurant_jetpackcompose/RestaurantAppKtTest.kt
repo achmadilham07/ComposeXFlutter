@@ -153,4 +153,26 @@ class RestaurantAppKtTest {
             onAllNodes(hasTestTag(activity.getString(R.string.restaurant_list))).assertCountEquals(1)
         }
     }
+
+    @Test
+    fun navHost_verifySearchRestaurant_onlyOneItem() {
+        composeTestRule.run {
+            onNodeWithTag(activity.getString(R.string.splash_page)).assertExists()
+            waitUntil(4000L) {
+                onAllNodesWithTag(activity.getString(R.string.restaurant_list_page)).fetchSemanticsNodes().size == 1
+            }
+            onNodeWithTag(activity.getString(R.string.search_bar)).performTextInput("Kafe Kita")
+            onNodeWithTag(activity.getString(R.string.restaurant_list)).run {
+                onChildren().assertCountEquals(1)
+                onChildAt(0).performClick()
+            }
+            waitUntil {
+                onAllNodesWithTag(activity.getString(R.string.restaurant_detail_page)).fetchSemanticsNodes().size == 1
+            }
+            onNodeWithText(restaurant.name).assertExists()
+            onNodeWithText(restaurant.city).assertExists()
+            onNodeWithText(restaurant.rating.toString()).assertExists()
+            onNodeWithText(restaurant.description).assertExists()
+        }
+    }
 }

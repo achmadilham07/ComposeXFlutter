@@ -6,19 +6,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.belajarubic.restaurant_jetpackcompose.R
+import com.belajarubic.restaurant_jetpackcompose.ui.common.Utils
 import com.belajarubic.restaurant_jetpackcompose.ui.composable.CircularIndicator
 import kotlinx.coroutines.delay
 
 
 @Composable
 fun SplashScreen(
+    navigateToHome: () -> Unit,
     modifier: Modifier = Modifier,
-    navigateToHome: () -> Unit = {},
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -27,13 +27,12 @@ fun SplashScreen(
             .testTag(stringResource(id = R.string.splash_page))
     ) {
         LaunchedEffect(true) {
-            delay(3000)
+            delay(Utils.delaySplashScreen)
             navigateToHome()
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            val content = LocalContext.current
             Text(text = stringResource(id = R.string.splash_text))
             Spacer(modifier = Modifier.height(8.dp))
             CircularIndicator()

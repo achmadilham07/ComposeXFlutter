@@ -5,12 +5,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Restaurant(
-    var id: String,
-    var name: String,
-    var description: String,
-    var pictureId: String,
-    var city: String,
-    var rating: Double
+    val id: String,
+    val name: String,
+    val description: String,
+    val pictureId: String,
+    val city: String,
+    val rating: Double
 ) : Parcelable {
 
     constructor() : this(

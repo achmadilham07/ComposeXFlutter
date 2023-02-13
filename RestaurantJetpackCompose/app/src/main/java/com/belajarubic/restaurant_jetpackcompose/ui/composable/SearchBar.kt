@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SearchBar(
-    modifier: Modifier = Modifier,
     query: String,
     onQueryChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         value = query,

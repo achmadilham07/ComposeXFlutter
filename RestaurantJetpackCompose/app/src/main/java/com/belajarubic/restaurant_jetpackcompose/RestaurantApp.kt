@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.belajarubic.restaurant_jetpackcompose.ui.common.Utils
 import com.belajarubic.restaurant_jetpackcompose.ui.navigation.Screen
 import com.belajarubic.restaurant_jetpackcompose.ui.screen.account.AccountScreen
 import com.belajarubic.restaurant_jetpackcompose.ui.screen.detail.DetailScreen
@@ -61,9 +62,9 @@ fun RestaurantApp(navController: NavHostController = rememberNavController()) {
         }
         composable(
             Screen.DetailRestaurant.route,
-            listOf(navArgument("restaurantId") { type = NavType.StringType }),
+            listOf(navArgument(Utils.argumentDetailScreen) { type = NavType.StringType }),
         ) {
-            val id = it.arguments?.getString("restaurantId") ?: ""
+            val id = it.arguments?.getString(Utils.argumentDetailScreen) ?: ""
             DetailScreen(
                 id = id,
                 navigateBack = {

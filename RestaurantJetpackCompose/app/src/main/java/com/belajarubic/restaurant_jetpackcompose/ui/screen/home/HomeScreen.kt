@@ -37,15 +37,15 @@ import com.dicoding.jetreward.ui.common.UiState
 
 @Composable
 fun HomeScreen(
+    navigateToDetail: (String) -> Unit,
+    navigateToAccount: () -> Unit,
+    navigateToFavorite: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = viewModel(
         factory = ViewModelFactory(
             Injection.provideRepository()
         )
     ),
-    navigateToDetail: (String) -> Unit = {},
-    navigateToAccount: () -> Unit = {},
-    navigateToFavorite: () -> Unit = {},
 ) {
     val query by viewModel.query
     val context = LocalContext.current
@@ -56,7 +56,7 @@ fun HomeScreen(
             TopAppBar(
                 actions = {
                     IconButton(
-                        onClick = { navigateToAccount() },
+                        onClick = navigateToAccount,
                         modifier = Modifier.semantics {
                             contentDescription = context.resources.getString(R.string.account)
                         }
@@ -64,7 +64,7 @@ fun HomeScreen(
                         Icon(Icons.Filled.Person, "about_page")
                     }
                     IconButton(
-                        onClick = { navigateToFavorite() },
+                        onClick = navigateToFavorite,
                         modifier = Modifier.semantics {
                             contentDescription = context.resources.getString(R.string.favorite)
                         }
@@ -92,7 +92,6 @@ fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-            viewModel.getAllRestaurant()
             Row(
                 modifier = Modifier.background(MaterialTheme.colors.primary)
             ) {
@@ -105,6 +104,7 @@ fun HomeScreen(
             viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { state ->
                 when (state) {
                     is UiState.Loading -> {
+                        viewModel.getAllRestaurant()
                         CircularIndicator()
                     }
                     is UiState.Success -> {
@@ -117,7 +117,7 @@ fun HomeScreen(
                                 stringResource(id = R.string.restaurant_list)
                             )
                         ) {
-                            items(state.data) { restaurant ->
+                            items(state.data, key = { it.id }) { restaurant ->
                                 RestaurantItem(
                                     restaurant = restaurant,
                                     modifier = Modifier.clickable {
